@@ -28,8 +28,11 @@ public class TestTelevisore {
 			testFindByExample(televisoreService);
 			System.out.println("In tabella ci sono " + televisoreService.listAll().size() + " elementi.");
 
-			testUpdateUser(televisoreService);
+			testUpdateTelevisore(televisoreService);
 			System.out.println("In tabella ci sono " + televisoreService.listAll().size() + " elementi.");
+
+			testGet(televisoreService);
+			System.out.println("fine dei test");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -78,14 +81,14 @@ public class TestTelevisore {
 
 		// se sono qui il test è ok quindi ripulisco i dati che ho inserito altrimenti
 		// la prossima volta non sarebbero 2 ma 4, ecc.
-		for (Televisore userItem : risultatifindByExample) {
-			televisoreService.rimuovi(userItem);
+		for (Televisore televisoreItem : risultatifindByExample) {
+			televisoreService.rimuovi(televisoreItem);
 		}
 
 		System.out.println(".......testFindByExample fine.............");
 	}
 
-	private static void testUpdateUser(TelevisoreService televisoreService) throws Exception {
+	private static void testUpdateTelevisore(TelevisoreService televisoreService) throws Exception {
 		System.out.println(".......testUpdateUser inizio.............");
 
 		// inserisco i dati che poi modifico
@@ -108,6 +111,18 @@ public class TestTelevisore {
 
 		System.out.println("aggiornato record: " + toBeUpdated);
 		System.out.println(".......testUpdateUser inizio.............");
+	}
+
+	private static void testGet(TelevisoreService televisoreService) throws Exception {
+		System.out.println(".......testGet inizio.............");
+		// creo un nuovo televisore
+		Televisore televisoreToBeUpdated = new Televisore("philips", "000", new Date());
+		// Inserisco il televisore nel DB
+		televisoreService.inserisciNuovo(televisoreToBeUpdated);
+		// cerco il nuovo televisore, dal database vedo che il mio philips sarà nell'id
+		// posizione 94L
+		System.out.println(televisoreService.findById(94L));
+		System.out.println(".......testGet fine.............");
 	}
 
 //		##############################################################################################
